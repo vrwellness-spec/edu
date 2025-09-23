@@ -95,6 +95,10 @@ class LMSBackendTester:
                     self.users[user_data['role']] = user_info
                     self.log_result('authentication', f'Register {user_data["role"]}', True, 
                                   f"Successfully registered {user_data['role']} user")
+                elif response.status_code == 400 and "already registered" in response.text:
+                    # User already exists, that's fine for testing
+                    self.log_result('authentication', f'Register {user_data["role"]}', True, 
+                                  f"User {user_data['role']} already exists (expected for repeated tests)")
                 else:
                     self.log_result('authentication', f'Register {user_data["role"]}', False, 
                                   f"Registration failed: {response.text}", {'status_code': response.status_code})
