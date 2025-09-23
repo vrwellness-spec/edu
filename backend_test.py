@@ -446,8 +446,8 @@ class LMSBackendTester:
                 headers = {'Authorization': f'Bearer {self.tokens["faculty"]}'}
                 student_id = self.users['student']['id']
                 
-                response = self.session.patch(f"{API_BASE_URL}/admin/users/{student_id}/status", 
-                                            headers=headers, json="suspended")
+                response = self.session.patch(f"{API_BASE_URL}/admin/users/{student_id}/status?status=suspended", 
+                                            headers=headers)
                 if response.status_code == 403:
                     self.log_result('admin_features', 'Non-admin status update', True, 
                                   "Correctly blocked non-admin from updating user status")
