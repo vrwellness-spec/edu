@@ -418,15 +418,15 @@ class LMSBackendTester:
                 student_id = self.users['student']['id']
                 
                 # Test suspending user
-                response = self.session.patch(f"{API_BASE_URL}/admin/users/{student_id}/status", 
-                                            headers=headers, json="suspended")
+                response = self.session.patch(f"{API_BASE_URL}/admin/users/{student_id}/status?status=suspended", 
+                                            headers=headers)
                 if response.status_code == 200:
                     self.log_result('admin_features', 'User status update', True, 
                                   "Successfully updated user status to suspended")
                     
                     # Test reactivating user
-                    response = self.session.patch(f"{API_BASE_URL}/admin/users/{student_id}/status", 
-                                                headers=headers, json="active")
+                    response = self.session.patch(f"{API_BASE_URL}/admin/users/{student_id}/status?status=active", 
+                                                headers=headers)
                     if response.status_code == 200:
                         self.log_result('admin_features', 'User status reactivation', True, 
                                       "Successfully reactivated user")
