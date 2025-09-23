@@ -108,21 +108,21 @@ class LMSBackendTester:
         
         # Test user login and JWT token generation
         for role in ['student', 'faculty', 'admin']:
-            if role in self.users:
-                try:
-                    login_data = {"email": f"{role}@test.com", "password": "password123"}
-                    response = self.session.post(f"{API_BASE_URL}/auth/login", json=login_data)
-                    if response.status_code == 200:
-                        login_response = response.json()
-                        self.tokens[role] = login_response['access_token']
-                        self.log_result('authentication', f'Login {role}', True, 
-                                      f"Successfully logged in {role} user")
-                    else:
-                        self.log_result('authentication', f'Login {role}', False, 
-                                      f"Login failed: {response.text}", {'status_code': response.status_code})
-                except Exception as e:
+            try:
+                login_data = {"email": f"{role}@test.com", "password": "password123"}
+                response = self.session.post(f"{API_BASE_URL}/auth/login", json=login_data)
+                if response.status_code == 200:
+                    login_response = response.json()
+                    self.tokens[role] = login_response['access_token']
+                    self.users[role] = login_response['user']
+                    self.log_result('authentication', f'Login {role}', True, 
+                                  f"Successfully logged in {role} user")
+                else:
                     self.log_result('authentication', f'Login {role}', False, 
-                                  f"Login error: {str(e)}")
+                                  f"Login failed: {response.text}", {'status_code': response.status_code})
+            except Exception as e:
+                self.log_result('authentication', f'Login {role}', False, 
+                              f"Login error: {str(e)}")
         
         # Test invalid credentials
         try:
