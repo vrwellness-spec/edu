@@ -53,7 +53,10 @@ class LMSBackendTester:
         """Create a temporary test file"""
         temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=filename)
         if content_type.startswith('text/'):
-            temp_file.write(content.encode())
+            if isinstance(content, str):
+                temp_file.write(content.encode())
+            else:
+                temp_file.write(content)
         else:
             temp_file.write(content)
         temp_file.close()
