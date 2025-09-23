@@ -183,39 +183,48 @@ backend:
 frontend:
   - task: "Authentication UI"
     implemented: true
-    working: "NA"
+    working: false
     file: "App.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
           comment: "Implemented login/register forms, JWT token management, auth context with React Context API. Role selection during registration."
+        - working: false
+          agent: "testing"
+          comment: "CRITICAL ISSUE: API calls are being aborted (net::ERR_ABORTED). Registration returns 400 errors for existing emails but error handling works. Login forms render correctly with proper validation. HTML5 form validation working. Admin role not available in registration dropdown (only Student/Faculty). Frontend-backend integration failing due to network/CORS issues."
 
   - task: "Dashboard Interface"
     implemented: true
-    working: "NA"
+    working: false
     file: "App.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
           comment: "Implemented statistics overview dashboard with video/notes/quiz counts, quick action cards, role-based navigation."
+        - working: false
+          agent: "testing"
+          comment: "CRITICAL ISSUE: Cannot test dashboard functionality due to authentication failures. UI structure is correct - statistics cards, navigation links, and role-based elements are properly implemented. Unable to verify data fetching and display due to API connection issues."
 
   - task: "Video Interface"
     implemented: true
-    working: "NA"
+    working: false
     file: "App.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
           comment: "Implemented YouTube-style video grid, upload form for Faculty/Admin, video player page. File size and date formatting included."
+        - working: false
+          agent: "testing"
+          comment: "CRITICAL ISSUE: Cannot test video functionality due to authentication failures. UI components are correctly implemented - video grid, upload forms with proper role-based restrictions, video cards with proper styling. Upload form validation works (requires file selection). Unable to test actual video upload/display due to API connection issues."
 
   - task: "Notes Interface"
     implemented: false
